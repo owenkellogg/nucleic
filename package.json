@@ -1,0 +1,19 @@
+{
+  "name": "nucleic",
+  "version": "0.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "split2": "^4.1.0",
+    "through2": "^4.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}
