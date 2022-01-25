@@ -36,15 +36,24 @@ export abstract class CrawlerBase extends EventEmitter {
 
   cache: Cache;
 
-  constructor(planariaToken: string) {
+  constructor(planariaToken?: string) {
 
     super()
 
-    this.planariaToken = planariaToken
+    console.log('THIS', this)
+
+    if (planariaToken) {
+
+      this.planariaToken = planariaToken
+    }
 
   }
 
   async start() {
+
+    if (!this.planariaToken) {
+      throw new Error('planaria token must be provided')
+    }
 
     this.block_height = (await this.getBlockHeight() - 1)
 

@@ -7,9 +7,11 @@ import * as through2 from 'through2'
 
 import axios from 'axios'
 
-import { CrawlerBase } from './crawler_base'
+import { CrawlerBase, Cache } from './crawler_base'
 
-import { RedisCache, RedisParams} from './redis_cache'
+import { RedisCache, RedisParams, MemoryCache} from './redis_cache'
+
+export { Cache }
 
 interface Params {
   cache?: RedisParams;
@@ -17,13 +19,15 @@ interface Params {
   query: any;
 }
 
+export { CrawlerBase }
+
 export class DefaultCrawler extends CrawlerBase {
+
+  cache: Cache;
 
   constructor(params: Params) {
 
     super(params.planariaToken)
-
-    console.log('THIS', this)
 
     this.query = params.query
 
@@ -50,4 +54,21 @@ export class DefaultCrawler extends CrawlerBase {
   }
 
 }
+
+export class Crawler extends CrawlerBase {
+
+  cache: Cache = new MemoryCache();
+
+  query: any;
+
+  planariaToken: string;
+
+  async onTransaction(tx) {
+
+    this.emit('transaction', tx)
+
+  }
+
+}
+
 

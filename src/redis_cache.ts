@@ -46,3 +46,29 @@ export class RedisCache implements Cache {
 
 }
 
+export class MemoryCache implements Cache {
+
+  params: any;
+
+  key: string;
+
+  client: any;
+
+  block_height: number = 0;
+
+  async getBlockHeight() {
+
+    return this.block_height + 1
+
+
+  }
+  async setBlockHeight(value) {
+
+    this.block_height = value
+
+    return value
+
+  }
+
+}
+
