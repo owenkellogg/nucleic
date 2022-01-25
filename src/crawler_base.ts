@@ -1,4 +1,5 @@
 
+const EventSource = require('eventsource')
 
 import { EventEmitter } from 'events'
 
@@ -40,8 +41,6 @@ export abstract class CrawlerBase extends EventEmitter {
 
     super()
 
-    console.log('THIS', this)
-
     if (planariaToken) {
 
       this.planariaToken = planariaToken
@@ -56,6 +55,10 @@ export abstract class CrawlerBase extends EventEmitter {
     }
 
     this.block_height = (await this.getBlockHeight() - 1)
+
+    let simpleQuery = new Object(this.query)
+
+    console.log('THIS QUERY', simpleQuery)
 
     const query = {
       q: {
@@ -74,6 +77,30 @@ export abstract class CrawlerBase extends EventEmitter {
           "out.o1": 1
         }
       },
+    }
+
+    const b64 = Buffer.from(JSON.stringify({
+      "v": 3,
+      "q": {
+        "find": {
+          "out.s2": "nucleic"
+        }
+      }
+
+    })).toString("base64")
+
+    const sock = new EventSource('https://txo.bitsocket.network/s/'+b64)
+
+    sock.onmessage = async (e) => {
+
+      let payload = JSON.parse(e.data)
+
+      if (payload.data.length > 0) {
+
+        this.onTransaction(Object.assign(payload.data[0], {"eventsource": true}))
+
+      }
+
     }
 
     const requestParams = {

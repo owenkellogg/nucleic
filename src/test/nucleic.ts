@@ -1,13 +1,23 @@
 
-import { Crawler } from '..'
+import { CrawlerBase } from '..'
 
-class NucleicCrawler extends Crawler {
+import { MemoryCache } from '../redis_cache'
 
-  query: {
-    "out.s1": "19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut"
+class NucleicCrawler extends CrawlerBase {
+
+  query: any;
+
+  token: string;
+
+  constructor() {
+    super()
+    this.planariaToken = 'eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxRlRyUWRaRjczd21tSFpVbzRhQzI1a0JWNUprWFRoeGl3IiwiaXNzdWVyIjoiZ2VuZXJpYy1iaXRhdXRoIn0.SHovaVkvTncvNmI0M1Q4WFZ0Ulk2SHdEMXQzOGM1RHJkVTFoTEYyLzhJeEhGZzJsSDQxeldzRG1vdUttemJPb2pJTXd4aVM5Qk9VNjFQNUhJK2x6bUxNPQ'
+    this.cache = new MemoryCache()
+    this.query = {
+      "out.s2": "nucleic"
+    }
+
   }
-
-  token: 'eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIxRlRyUWRaRjczd21tSFpVbzRhQzI1a0JWNUprWFRoeGl3IiwiaXNzdWVyIjoiZ2VuZXJpYy1iaXRhdXRoIn0.SHovaVkvTncvNmI0M1Q4WFZ0Ulk2SHdEMXQzOGM1RHJkVTFoTEYyLzhJeEhGZzJsSDQxeldzRG1vdUttemJPb2pJTXd4aVM5Qk9VNjFQNUhJK2x6bUxNPQ'
 
   async onTransaction(tx) {
 
@@ -18,11 +28,7 @@ class NucleicCrawler extends Crawler {
 
 (async () => {
 
-
-
   const crawler = new NucleicCrawler()
-
-  console.log("CACHE", crawler.cache)
 
   await crawler.start()
 
