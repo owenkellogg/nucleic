@@ -23,6 +23,8 @@ export class DefaultCrawler extends CrawlerBase {
 
     super(params.planariaToken)
 
+    console.log('THIS', this)
+
     this.query = params.query
 
     console.log(this)

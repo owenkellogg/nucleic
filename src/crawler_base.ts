@@ -55,7 +55,15 @@ export abstract class CrawlerBase extends EventEmitter {
             "$gt": this.block_height
           }
         }),
-        project: { "blk": 1, "tx.h": 1, "out.s4": 1, "out.o1": 1 }
+        project: {
+          "blk": 1,
+          "tx.h": 1,
+          "out.s2": 1,
+          "out.s3": 1,
+          "out.s4": 1,
+          "out.s5": 1,
+          "out.o1": 1
+        }
       },
     }
 
