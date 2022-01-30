@@ -1,10 +1,13 @@
 {
   "name": "nucleic",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
+  },
+  "bin": {
+    "nucleic": "./dist/bin/nucleic.js"
   },
   "keywords": [],
   "author": "",

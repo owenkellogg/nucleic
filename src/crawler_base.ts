@@ -74,12 +74,18 @@ export abstract class CrawlerBase extends EventEmitter {
           "out.s3": 1,
           "out.s4": 1,
           "out.s5": 1,
+          "out.s6": 1,
+          "out.s7": 1,
+          "out.s8": 1,
+          "out.s9": 1,
+          "out.s10": 1,
+          "out.s11": 1,
           "out.o1": 1
         }
       },
     }
 
-    const b64 = Buffer.from(JSON.stringify({
+    var b64 = Buffer.from(JSON.stringify({
       "v": 3,
       "q": {
         "find": {
