@@ -1,6 +1,6 @@
 {
   "name": "nucleic",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -16,13 +16,18 @@
     "@types/redis": "^4.0.11",
     "async-redis": "^2.0.0",
     "axios": "^0.25.0",
+    "bsv": "^2.0.10",
+    "commander": "^9.0.0",
+    "dotenv": "^15.0.0",
     "eventsource": "^1.1.0",
+    "filepay": "^2.2.12",
     "pg": "^8.7.1",
     "redis": "^4.0.2",
     "sequelize": "^6.14.0",
     "split2": "^4.1.0",
     "through2": "^4.0.2",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "uuid": "^8.3.2"
   }
 }
