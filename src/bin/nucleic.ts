@@ -4,6 +4,8 @@ require('dotenv').config()
 
 import { program } from 'commander'
 
+import { NucleicApp } from '../app'
+
 import { publish } from '../message'
 
 import { Actor } from '../actor'
@@ -28,6 +30,24 @@ function getActor(options) {
 
   if (!owner) {
 
+    try {
+
+      let {privatekey} = JSON.parse(readFileSync(join(
+        process.cwd(),
+        '.nucleic',
+        'config.json'
+      )).toString('utf8'))
+
+      owner = privatekey
+
+    } catch(error) {
+
+    }
+
+  }
+
+  if (!owner) {
+
     throw new Error('either --key argument or NUCLEIC_AUTHOR_PRIVATE_KEY environment variable required')
 
   }
@@ -46,10 +66,12 @@ function getActor(options) {
 
   }
 
-  return new Actor({
+  let actor = new Actor({
     purse,
     owner
   })
+
+  return actor
 
 }
 
@@ -108,12 +130,12 @@ function putFile(params, key): Promise<any> {
 }
 
 program
-  .command('deploy <file>')
+  .command('deploy [file]')
   .action(async (file='index.html') => {
 
     const options = program.opts()
 
-    const actor = getActor(options)
+    let actor = getActor(options)
 
     try {
       var filepath;
@@ -133,6 +155,8 @@ program
 
       let content = readFileSync(filepath).toString()
 
+      const key = actor.purse.toString()
+
       try {
 
         let txid = await putFile({
@@ -140,7 +164,7 @@ program
           contentType: 'text/html',
           encoding: 'utf8',
           name: 'index.html'
-        }, options['key'])
+        }, key)
 
         console.log('txid', txid)
 
@@ -167,6 +191,31 @@ program
       console.error('error', error)
 
     }
+
+    process.exit(0)
+
+  })
+
+
+program
+  .command('new <app_name>')
+  .action(async (app_name) => {
+
+    await NucleicApp.create({ app_name })
+
+    process.exit(0)
+
+  })
+
+program
+  .command('address')
+  .action(async () => {
+
+    let app = await NucleicApp.load()
+
+    console.log(`\n Your app's address is: \n`)
+
+    console.log(`${app.address.toString()}\n`)
 
     process.exit(0)
 
